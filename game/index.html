@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember Duel — a turn-based card duel</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #16241a; height: 100%; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas {
+    width: 1280px; height: 800px; max-width: 100vw; max-height: 100vh;
+    display: block; background: #274d33; cursor: pointer;
+  }
+  #help {
+    position: fixed; left: 12px; bottom: 10px; color: rgba(255,255,255,0.65);
+    font: 13px Georgia, serif;
+  }
+</style>
+</head>
+<body>
+<canvas id="game" width="1280" height="800"></canvas>
+<div id="help">Ember Duel — click a card to play it, Enter ends your turn, R restarts, Esc returns to the title.</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
