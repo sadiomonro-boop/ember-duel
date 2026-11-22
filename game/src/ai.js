@@ -14,18 +14,24 @@ export function chooseRivalPlays(state) {
     .map((card, index) => ({ card, index }))
     .filter((entry) => entry.card.cost <= left);
 
-  // 1. Lethal check: the cheapest set of strikes that ends the player.
+  // 1. Lethal check: the cheapest set of strikes that ends the player,
+  // only counting strikes the rival can actually afford, and only
+  // counting damage past the player's shield (shield soaks first).
   const strikes = affordable
     .filter((entry) => entry.card.effect === 'strike')
     .sort((a, b) => a.card.cost - b.card.cost);
   let damage = 0;
+  let cost = 0;
   const lethal = [];
+  const target = state.playerLife + (state.playerShield || 0);
   for (const entry of strikes) {
-    if (damage >= state.playerLife) break;
+    if (damage >= target) break;
+    if (cost + entry.card.cost > energy) break;
     lethal.push(entry);
+    cost += entry.card.cost;
     damage += entry.card.attack;
   }
-  if (damage >= state.playerLife && lethal.length > 0) {
+  if (damage >= target && lethal.length > 0) {
     return lethal.map((entry) => entry.index);
   }
 
